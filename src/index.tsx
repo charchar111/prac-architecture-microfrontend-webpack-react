@@ -1,8 +1,10 @@
-import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
+import App from "@src/App";
 
 const container = document.getElementById("react-root");
-const root = createRoot(container!);
 
-root.render(<App />);
+container
+  ? createRoot(container).render(<App />)
+  : (() => {
+      throw new Error("react의 root 컨테이너가 없습니다");
+    })();
