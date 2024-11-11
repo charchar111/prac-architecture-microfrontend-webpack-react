@@ -1,15 +1,17 @@
 import Com1222 from "@public/image/com1222";
 import "@src/asset/styles/app.css";
 import "@src/asset/styles/app2.scss";
-// import logo from "@public/image/logo.png";
+import { useState } from "react";
+import example1 from "@src/asset/data/json/example1.json";
+import ImageLoader from "@src/components/imageLoader";
+
 function App() {
-  const a: number = 1;
-  console.log("a", process.env.API_KEY);
+  const [open, setOpen] = useState(false);
   return (
     <div>
-      hello22
-      {/* <img src={logo} className="App-logo" alt="logo" /> */}
-      <Com1222 />
+      <button onClick={() => setOpen((prev) => !prev)}>click</button>
+      hello
+      {!open ? null : <ImageLoader />}
     </div>
   );
 }

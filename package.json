@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "start:build": "serve -s dist --listen 5000",
     "prod": "NODE_ENV=production webpack serve",
     "dev": "NODE_ENV=development webpack serve",
     "build": "NODE_ENV=production webpack"
@@ -11,8 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.26.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-loading-skeleton": "^3.5.0",
     "source-map-loader": "^5.0.0"
   },
   "devDependencies": {
@@ -25,8 +28,10 @@
     "@types/react-dom": "^18.3.1",
     "@types/webpack-env": "^1.18.5",
     "babel-loader": "^9.2.1",
+    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.6.3",
     "sass": "^1.80.6",
     "sass-loader": "^16.0.3",

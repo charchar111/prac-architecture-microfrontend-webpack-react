@@ -2,6 +2,7 @@ const path = require("path");
 const Dotenv = require("dotenv-webpack");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = () => {
   const isDevelopment = process.env.NODE_ENV !== "production";
@@ -10,14 +11,13 @@ module.exports = () => {
     : path.resolve(__dirname, ".env.production");
 
   return {
-    mode: "production",
     entry: "./src/index.tsx", // 애플리케이션의 진입점. 번들링 시 가장 먼저 시작하는 파일
 
     // 번들링 결과물
     output: {
       filename: "bundle.js", // 파일 이름
-      path: path.resolve(__dirname, "dist"), // 파일 저장 경로
-      publicPath: "/", // 브라우저에서 빌드 파일을 요청할 때 서버의 경로. 정적 파일을 찾을 때 중요
+      path: path.resolve(__dirname, "dist"), // 빌드된 파일이 저장되는 경로
+      publicPath: "/", // 브라우저에서 빌드된 프론트엔드 파일에 접근하는 url경로
       clean: true, // 빌드 시, 이전 빌드 파일을 삭제함. 불필요한 파일이 누적되는 걸 방지
     },
 
@@ -33,12 +33,19 @@ module.exports = () => {
       alias: {
         "@src": path.resolve(__dirname, "src"),
         "@public": path.resolve(__dirname, "public"),
+        "@asset": path.resolve(__dirname, "src", "asset"),
       },
     },
     // 개발용 로컬 서버
     devServer: {
       port: 3000, // 포트번호
       hot: true, // hmr 기능 활성화
+      static: [
+        {
+          directory: path.join(__dirname, "public"),
+          publicPath: "/public",
+        },
+      ],
     },
 
     // eval-source-map: 번들 파일 내에 소스맵이 포함. 디버깅 시 원본 소스에 가까운 코드를 제공하나 무거우므로 성능이 느림 => 개발에 적합
@@ -58,7 +65,7 @@ module.exports = () => {
             {
               loader: "ts-loader", // TypeScript 로더
               options: {
-                // transpileOnly: true, // 타입 체크를 위해
+                transpileOnly: true, // 타입 검사만 하기. 컴파일 검사를 하지 않음
               },
             },
             {
@@ -74,10 +81,22 @@ module.exports = () => {
             "sass-loader", // Sass 파일을 CSS로 변환
           ],
         },
+        {
+          test: /\.(png|jpe?g|gif|svg)$/i, // 이미지 파일 확장자 처리
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "[path][name].[ext]", // 파일 경로와 이름을 그대로 유지
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [
       new Dotenv({ path: envPath }),
+      new CopyWebpackPlugin({ patterns: [{ from: "public", to: "public" }] }),
       new HtmlWebpackPlugin({
         template: "public/index.html",
       }),

@@ -73,25 +73,6 @@ module.exports = (_, argv) => {
           test: /\.(png|jpg|jpeg|gif|ico)$/,
           use: ["file-loader"],
         },
-
-        // {
-        //   test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        //   // type: "assets/fonsts",
-        //   use: [
-        //     {
-        //       loader: "file-loader",
-        //       options: {
-        //         name: "assets/fonts/[name].[ext]",
-        //         outputPath: "assets/fonts/",
-        //         publicPath: "/assets/fonts/",
-        //       },
-        //     },
-        //   ],
-        // },
-        //   {
-        //     test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        //     type: "asset/resource",
-        // },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
           use: [
@@ -106,20 +87,6 @@ module.exports = (_, argv) => {
             },
           ],
         },
-        // {
-        //   test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        //   use: [
-        //     {
-        //       loader: "file-loader",
-        //       options: {
-        //         // name: "assets/fonts/[name].[hash:8].[ext]",
-        //         name: "assets/fonts/[name].[ext]",
-        //         // outputPath: "assets/fonts/",
-        //         // publicPath: "assets/fonts/",
-        //       },
-        //     },
-        //   ],
-        // },
       ],
     },
 
@@ -127,16 +94,6 @@ module.exports = (_, argv) => {
       new ModuleFederationPlugin({
         name: "main",
         filename: "main.js",
-        // remotes: {
-        //   common: "common@http://localhost:9001/common.js",
-        //   templateset: "templateset@http://localhost:9002/templateset.js",
-        //   settlementEnvironment:
-        //     "settlementEnvironment@http://localhost:9011/settlementEnvironment.js",
-        //   investSiteAnalysis:
-        //     "investSiteAnalysis@http://localhost:9012/investSiteAnalysis.js",
-        //   dataAnalysis: "dataAnalysis@http://localhost:9014/dataAnalysis.js",
-        // },
-
         exposes: {},
         shared: {
           // ...packageJson.dependencies,
@@ -186,9 +143,6 @@ module.exports = (_, argv) => {
       new Dotenv({
         path: envFilePath,
       }),
-      // new WebpackFontPreloadPlugin({
-      //   extensions: ["woff", "woff2"],
-      // }),
       new webpack.HotModuleReplacementPlugin(),
       new ReactRefreshPlugin({
         exclude: [/node_modules/, /bootstrap\.tsx$/],

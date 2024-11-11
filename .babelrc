@@ -6,6 +6,7 @@
     //   "@babel/preset-env",
     //   { "targets": { "browsers": ["last 2 versions", ">= 5% in KR"] } }
     // ],
+    ["@babel/preset-react", { "runtime": "automatic" }],
     "@babel/preset-typescript" // TypeScript 코드를 JavaScript로 변환하여 타입 정보를 제거
   ],
   "plugins": ["@babel/transform-runtime"]
