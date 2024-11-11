@@ -4,14 +4,22 @@ import "@src/asset/styles/app2.scss";
 import { useState } from "react";
 import example1 from "@src/asset/data/json/example1.json";
 import ImageLoader from "@src/components/imageLoader";
+import SVGLoader from "components/SVGLoader";
 
 function App() {
-  const [open, setOpen] = useState(false);
+  const [openImg, setOpenImg] = useState(false);
+  const [openSvg, setOpenSvg] = useState(false);
   return (
     <div>
-      <button onClick={() => setOpen((prev) => !prev)}>click</button>
+      <button onClick={() => setOpenImg((prev) => !prev)}>
+        open ImageLoader
+      </button>
+      <button onClick={() => setOpenSvg((prev) => !prev)}>
+        open SVGLoader
+      </button>
       hello
-      {!open ? null : <ImageLoader />}
+      {!openImg ? null : <ImageLoader />}
+      {!openSvg ? null : <SVGLoader />}
     </div>
   );
 }

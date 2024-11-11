@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 
 export default function ImageLoader() {
   const [isLoaded, setIsLoaded] = useState(true);
-  console.log("__dirname", __dirname);
+  console.log("imgSnowSrc", imgSnowSrc);
   return (
     <div>
       {" "}

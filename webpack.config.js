@@ -82,7 +82,33 @@ module.exports = () => {
           ],
         },
         {
-          test: /\.(png|jpe?g|gif|svg)$/i, // 이미지 파일 확장자 처리
+          test: /\.svg$/, // .svg 확장자를 가진 파일에 대해 설정을 적용
+
+          //  확장자 패턴에 대해 복수의 로더 중 하나만 적용하는 분기처리 옵션
+          oneOf: [
+            {
+              use: ["@svgr/webpack"], // @svgr/webpack 로더를 사용하여 SVG를 React 컴포넌트로 변환 - svg 태그로 삽입
+              issuer: /\.[jt]sx?$/, // JavaScript 또는 TypeScript 파일(.js, .jsx, .ts, .tsx) 안에서만 이 설정을 적용. svg의 동적 스타일링을 위함
+              resourceQuery: { not: [/url/] }, // 모듈 경로에서 url이 포함되어 있을 시, 모듈 적용 x
+            },
+            {
+              // img.src 태그로 삽입하기 위해 svg 파일 모듈을 url로 변환
+              loader: "file-loader",
+              options: {
+                name: "[path][name].[ext]", // 파일 경로와 이름을 그대로 유지
+              },
+              resourceQuery: /url/, // *.svg?url.
+            },
+          ],
+        },
+        // 만약 svg 확장자를 분기처리 없이 리엑트 컴포넌트로만 다룰 경우, 아래 설정 사용
+        // {
+        //   test: /\.svg$/i,
+        //   issuer: /\.[jt]sx?$/,
+        //   use: ["@svgr/webpack"],
+        // },
+        {
+          test: /\.(png|jpe?g|gif|ico)$/i, // 이미지 파일 확장자 처리
           use: [
             {
               loader: "file-loader",
