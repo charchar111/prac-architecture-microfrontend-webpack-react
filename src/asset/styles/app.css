@@ -1,3 +1,12 @@
+/* 폰트 파일 추가 */
+@import url("./font.css");
+
 body {
+  /* 폰트 사용 */
+  font-family: MonsieurLaDoulaise, NanumBrushScript, NanumPenScript;
   background-color: rgb(255, 205, 205);
+}
+body * {
+  /* 폰트 사용 */
+  font-family: MonsieurLaDoulaise, NanumBrushScript, NanumPenScript;
 }
